@@ -19,6 +19,7 @@ public class EnemyAI : AIBOT{
 
     public void Awake() {
         Agent = this.gameObject.GetComponent<NavMeshAgent>();
+        AIAnimation = gameObject.AddComponent<AIAnimations>();
     }
     public void Start() {
         Follow();
@@ -26,23 +27,52 @@ public class EnemyAI : AIBOT{
 
 
     public void FixedUpdate() {
-        if (State != null)
+        if (State != null){
             State.fixedUpdate(); 
+        }else{
+            Debug.Log("State is null");
+        }
     }
 
     public override void Attack(){
+        if (this.AttackState != null){
+            State = AttackState;
+        }else{
+            var _AttackState = new AttackState(Agent);
+            AttackState = _AttackState;
+            State = AttackState;
+        }
         Debug.Log("Attack");
     }
 
     public override void Follow(){
-        var FollowState = new FollowState(Agent);
-        State = FollowState;
+        if (this.followState != null){
+            State = followState;
+        }else{
+            var _FollowState = new FollowState(Agent);
+            followState = _FollowState;
+            State = followState;
+        }
         Debug.Log("Follow");
     }
 
     public override void Injuerd(){
-        
-        Debug.Log("Injuerd");
+        if (this.InjuerdState != null){
+            State = InjuerdState;
+        }else{
+            var _InjuerdState = new InjuerdState(Agent);
+            InjuerdState = _InjuerdState;
+            State = InjuerdState;
+        }
+            Debug.Log("Injuerd");
+    }
+    
+    public void OnTriggerEnter(Collider other) {
+        var obj = other.transform.gameObject;
+        if (obj.tag == "Projectile"){
+            Debug.Log("Projectile Trigger");
+            Injuerd();
+        }    
     }
 }
 

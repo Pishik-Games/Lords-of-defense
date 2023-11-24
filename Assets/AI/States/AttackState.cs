@@ -2,30 +2,25 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class FollowState : BaseState
-{
+public class AttackState : BaseState
+{ 
 
-    public FollowState(NavMeshAgent agent) : base(agent){
+    public AttackState(NavMeshAgent agent) : base(agent){
         this.Agent = agent;
     }
     public GameObject Target;
 
-    private Vector3 LastPositionTarget;
-
     public override void enter(){
         Target = GameObject.Find("Player").gameObject;
+        agentScript.AIAnimation.AttackAnimation();
     }
 
     public override void fixedUpdate(){
         if (Agent.stoppingDistance < Vector3.Distance(
-            LastPositionTarget,
+            agentScript.transform.position,
                 Target.transform.position)){
-            LastPositionTarget = Target.transform.position;
-            Follow(LastPositionTarget);
-        }else if (Agent.remainingDistance <= Agent.stoppingDistance){
-            agentScript.Attack();
+            agentScript.Follow();
         }
-        
     }
     public override void update(){
 
@@ -34,10 +29,8 @@ public class FollowState : BaseState
 
     public override void exit(){
         Target = null;
+        agentScript.AIAnimation.StopAttackAnimation();
     }
 
     
-    public void Follow(Vector3 TargetPosition){
-        Agent.SetDestination(TargetPosition);
-    }
 }
