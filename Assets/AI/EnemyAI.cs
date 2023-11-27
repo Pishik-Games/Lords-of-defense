@@ -30,7 +30,6 @@ public class EnemyAI : AIBOT{
         if (State != null){
             State.fixedUpdate(); 
         }else{
-            Debug.Log("State is null");
         }
     }
 
@@ -42,7 +41,6 @@ public class EnemyAI : AIBOT{
             AttackState = _AttackState;
             State = AttackState;
         }
-        Debug.Log("Attack");
     }
 
     public override void Follow(){
@@ -53,7 +51,6 @@ public class EnemyAI : AIBOT{
             followState = _FollowState;
             State = followState;
         }
-        Debug.Log("Follow");
     }
 
     public override void Injuerd(){
@@ -64,13 +61,11 @@ public class EnemyAI : AIBOT{
             InjuerdState = _InjuerdState;
             State = InjuerdState;
         }
-            Debug.Log("Injuerd");
     }
     
     public void OnTriggerEnter(Collider other) {
         var obj = other.transform.gameObject;
         if (obj.tag == "Projectile"){
-            Debug.Log("Projectile Trigger");
             Injuerd();
         }    
     }

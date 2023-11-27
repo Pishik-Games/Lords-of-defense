@@ -21,6 +21,8 @@ public abstract class AIBOT : MonoBehaviour{
 
     public virtual void DestroyOnDie(){
         Debug.Log(this.gameObject.name+" Died!");
+        WaveManager._instance.RemoveSpawnedEnemyAI(this.gameObject);
         Destroy(this.gameObject);
+        
     }
 }

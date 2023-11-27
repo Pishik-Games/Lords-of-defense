@@ -17,6 +17,10 @@ public class FollowState : BaseState
     }
 
     public override void fixedUpdate(){
+        if (Agent == null || agentScript == null)
+        {
+            Debug.Log("Agent or agentScript is null");
+        }
         if (Agent.stoppingDistance < Vector3.Distance(
             LastPositionTarget,
                 Target.transform.position)){
