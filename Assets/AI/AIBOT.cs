@@ -4,6 +4,8 @@ using UnityEngine.AI;
 public abstract class AIBOT : MonoBehaviour{
     public NavMeshAgent Agent;
     public BaseState _state;
+
+    public HealthManager healthManager;
     public abstract BaseState State{get;set;}
     public GameObject Target;
 

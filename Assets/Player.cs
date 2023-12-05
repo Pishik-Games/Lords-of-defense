@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class Player : MonoBehaviour
 {
     public float speed = 10.0f;
     public float frequency = 1.0f;
+
+    public HealthManager playerHealthManager;
 
     public GameObject projectile;
     public GameObject enemiesOutRange;
@@ -16,20 +19,25 @@ public class Player : MonoBehaviour
     private Vector3 moveDirection;
     private float timeInterval = 0;
 
+    private void Awake() {
+        playerHealthManager =  gameObject.AddComponent<HealthManager>();
+        playerHealthManager.SetHealthManagerOnHit(() => {
+            Debug.Log("Player Got Damage");
+            Debug.Log("Health " + playerHealthManager.Health);
+            if (playerHealthManager.Health <= 0){
+                Die();
+            }
+        });
+    }
+
     private void Update()
     {
+        Injuerd();
         MoveAndTurn();
         ShootProjectile();
     }
 
-    private void MoveAndTurn()
-    {
-        /* // &&& No JoyStick &&&
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        moveDirection = new Vector3(horizontalInput, 0, verticalInput); */
-
-        /* // &&& With JoyStick */
+    private void MoveAndTurn(){
         moveDirection = new Vector3(variableJoystick.Horizontal, 0, variableJoystick.Vertical);
 
         transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
@@ -40,16 +48,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ShootProjectile()
-    {
+    private void ShootProjectile(){
         if (enemiesInRange.transform.childCount != 0)
         {
             ShootTowards(enemiesInRange.transform.GetChild(GetNearestIndex()).transform.position);
         }  
     }
 
-    private int GetNearestIndex()
-    {
+    private int GetNearestIndex(){
         int nearestIndex = -1;
         float leastDistance = 0;
 
@@ -73,39 +79,37 @@ public class Player : MonoBehaviour
         return nearestIndex;
     }
 
-    private void ShootTowards(Vector3 towards)
-    {
-        // Face the direction of nearest enemy
+    private void ShootTowards(Vector3 towards){
         Vector3 normalizedDirection = (towards - transform.position).normalized;
         transform.forward = new(normalizedDirection.x, 0, normalizedDirection.z);
-
-        // Shoot the projectle if enough time has passed
         if ((Time.time - timeInterval) > frequency)
         {
-            // Instantiate the object
             GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
-
-            // TODO: Set the scale, speed, and power of projectile
-
-            // Get the forward direction of the current object
             Vector3 forwardDirection = transform.forward;
-
-            // Rotate the forward direction by 90 degrees in the y-axis
             Quaternion additionalRotation = Quaternion.Euler(0f, 90f, 0f);
             Vector3 rotatedForward = additionalRotation * forwardDirection;
-
-            // Set the rotation of the instantiated object to the rotated forward direction
             newProjectile.transform.rotation = Quaternion.LookRotation(rotatedForward);
 
             timeInterval = Time.time;
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other){
         if (other.gameObject.name == "World Border")
         {
             EditorApplication.ExitPlaymode();
         }
+    }
+
+    public void OnGetHit(){
+    }
+
+    private void Injuerd()
+    {
+
+    }
+
+    private void Die(){
+        Destroy(gameObject);
     }
 }

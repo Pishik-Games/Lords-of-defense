@@ -14,6 +14,7 @@ public class FollowState : BaseState
 
     public override void enter(){
         Target = GameObject.Find("Player").gameObject;
+        agentScript.AIAnimation.FollowAnimation();
     }
 
     public override void fixedUpdate(){
@@ -38,6 +39,7 @@ public class FollowState : BaseState
 
     public override void exit(){
         Target = null;
+        agentScript.AIAnimation.StopFollowAnimation();
     }
 
     

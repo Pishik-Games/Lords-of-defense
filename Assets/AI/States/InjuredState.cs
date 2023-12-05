@@ -4,11 +4,13 @@ using UnityEngine.AI;
 
 public class InjuerdState : BaseState
 {
-
-    public InjuerdState(NavMeshAgent agent) : base(agent){
+    public InjuerdState(NavMeshAgent agent , HealthManager healthManager) : base(agent){
         this.Agent = agent;
+        this.agentHealthManager = healthManager;
     }
     //public GameObject Target;
+
+    public HealthManager agentHealthManager;
 
     public override void enter(){
       //  Target = GameObject.Find("Player").gameObject;
@@ -27,10 +29,10 @@ public class InjuerdState : BaseState
     }
 
     public void GetHit(){
-        agentScript.health -= 50.0f;
-        Debug.Log(agentScript.health);
-        if (agentScript.health <= 0){
-            Debug.Log(agentScript.health);
+        agentHealthManager.Damage(50);
+        Debug.Log(agentHealthManager.Health);
+        if (agentHealthManager.Health <= 0){
+            Debug.Log(agentHealthManager.Health);
             Die();
         }else{
             agentScript.Follow();

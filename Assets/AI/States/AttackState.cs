@@ -20,6 +20,8 @@ public class AttackState : BaseState
             agentScript.transform.position,
                 Target.transform.position)){
             agentScript.Follow();
+        }else{
+            agentScript.transform.LookAt(Target.transform.position);
         }
     }
     public override void update(){

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyAI : AIBOT{
+
+    public int damage = 1;
     public override BaseState State { 
         get {
             return _state; 
@@ -20,6 +22,7 @@ public class EnemyAI : AIBOT{
     public void Awake() {
         Agent = this.gameObject.GetComponent<NavMeshAgent>();
         AIAnimation = gameObject.AddComponent<AIAnimations>();
+        healthManager = gameObject.AddComponent<HealthManager>();
     }
     public void Start() {
         Follow();
@@ -57,7 +60,7 @@ public class EnemyAI : AIBOT{
         if (this.InjuerdState != null){
             State = InjuerdState;
         }else{
-            var _InjuerdState = new InjuerdState(Agent);
+            var _InjuerdState = new InjuerdState(Agent, healthManager);
             InjuerdState = _InjuerdState;
             State = InjuerdState;
         }
@@ -68,6 +71,16 @@ public class EnemyAI : AIBOT{
         if (obj.tag == "Projectile"){
             Injuerd();
         }    
+    }
+
+    public void AttackAnimationHit(){
+        Target = GameObject.FindGameObjectWithTag("Player").gameObject;
+        if (Vector3.Distance(transform.position,Target.transform.position) <= Agent.stoppingDistance){
+            Target.GetComponent<HealthManager>().Damage(damage);
+            Debug.Log("attack Damage Deliverd");
+            
+        }
+
     }
 }
 
