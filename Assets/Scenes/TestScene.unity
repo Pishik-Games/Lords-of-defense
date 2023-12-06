@@ -559,7 +559,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &629940736
 Transform:
@@ -570,7 +570,7 @@ Transform:
   m_GameObject: {fileID: 629940731}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 21.8, y: 0, z: -52.7}
-  m_LocalScale: {x: 74.5, y: 74.5, z: 74.5}
+  m_LocalScale: {x: 100.00001, y: 100.00001, z: 100.00001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1574625040726640900}
@@ -1023,6 +1023,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51c6bff3c1049746a8ad8e99439b1c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frequency: 1
+  projectile: {fileID: 0}
   enemiesOutRange: {fileID: 355253542}
   enemiesInRange: {fileID: 1224156444}
 --- !u!1 &1463710990
@@ -1175,9 +1177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  frequency: 100
   playerHealthManager: {fileID: 0}
-  projectile: {fileID: 2253213735480863608, guid: 61b6341d7fe61fd418c4a593a5d4e2a9, type: 3}
   enemiesOutRange: {fileID: 355253542}
   enemiesInRange: {fileID: 1224156444}
   variableJoystick: {fileID: 3881087802944191719}
@@ -1573,7 +1573,7 @@ Transform:
   m_GameObject: {fileID: 7740595256590883391}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.07166853, z: 0}
-  m_LocalScale: {x: 0.5285554, y: 0.5285554, z: 0.5285554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 629940736}
