@@ -27,7 +27,6 @@ public class HealthManager : MonoBehaviour
     }
     public void Awake() {
         MaxHealth = 100;
-        Debug.Log(MaxHealth +  " " + Health + " " + _health);
         Health = MaxHealth;
     }
 
