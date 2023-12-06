@@ -7,6 +7,8 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager _instance;
+
+    public static WaveStates CurrentWaveState;
     private FormationBase _formation;
     public FormationBase Formation {
         get {
@@ -35,12 +37,13 @@ public class WaveManager : MonoBehaviour
 
     // Update is called once per frame
     public void FixedUpdate(){
-        if (_spawnedUnits.Count <= 0){
+        if (CurrentWaveState == WaveStates.insideWave && _spawnedUnits.Count <= 0 ){
             WaveExit();
         }
     }
 
-    void WaveStart(){
+    public void WaveStart(){
+        CurrentWaveState = WaveStates.insideWave;
         SetFormation();
     }
     private void SetFormation() {
@@ -81,12 +84,18 @@ public class WaveManager : MonoBehaviour
 
 
     void WaveExit(){
-        WaveStart();
+        CurrentWaveState = WaveStates.outsideWAve;
+        MatchManager._instance.OnWaveEnd();
     }
 
 
     public void RemoveSpawnedEnemyAI(GameObject enemyAI){
         _spawnedUnits.Remove(enemyAI);
+    }
+
+    public enum WaveStates{
+        insideWave,
+        outsideWAve 
     }
 
 }
