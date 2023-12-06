@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public interface HitReaction{
+    public void OnHit();
+}
 public class HealthManager : MonoBehaviour
 {
     public HealthManager(callBack _onHit){

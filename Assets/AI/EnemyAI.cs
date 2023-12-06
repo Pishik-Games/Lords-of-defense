@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyAI : AIBOT{
-
-    public int damage = 1;
     public override BaseState State { 
         get {
             return _state; 
@@ -66,12 +64,8 @@ public class EnemyAI : AIBOT{
         }
     }
     
-    public void OnTriggerEnter(Collider other) {
-        var obj = other.transform.gameObject;
-        if (obj.tag == "Projectile"){
-            Injuerd();
-        }    
-    }
+    // public void OnTriggerEnter(Collider other) {
+    // }
 
     public void AttackAnimationHit(){
         Target = GameObject.FindGameObjectWithTag("Player").gameObject;

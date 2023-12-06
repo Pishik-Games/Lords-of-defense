@@ -10,6 +10,13 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(speed * Time.deltaTime * new Vector3(-1, 0, 0));
     }
+    private void OnTriggerEnter(Collider other) {
+        var Obj = other.gameObject;
+        if(Obj.CompareTag("Enemy")){
+            Obj.GetComponent<EnemyAI>().Injuerd();
+            Destroy(this.gameObject);
+        }
+    }
 
     private void OnTriggerExit(Collider other)
     {

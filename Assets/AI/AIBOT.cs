@@ -14,9 +14,7 @@ public abstract class AIBOT : MonoBehaviour{
     public InjuerdState InjuerdState;
     public AttackState AttackState;
     public AIAnimations AIAnimation;
-
-    public float health = 100.0f;
-    public float damage = 1.0f;
+    public int damage = 1;
     public abstract void Follow();
     public abstract void Attack();
     public abstract void Injuerd();
