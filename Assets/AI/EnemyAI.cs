@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : AIBOT{
+public class EnemyAI : AIBOT {
+
+    public Material HitMatrial;
     public override BaseState State { 
         get {
             return _state; 
@@ -58,7 +60,7 @@ public class EnemyAI : AIBOT{
         if (this.InjuerdState != null){
             State = InjuerdState;
         }else{
-            var _InjuerdState = new InjuerdState(Agent, healthManager);
+            var _InjuerdState = new InjuerdState(Agent);
             InjuerdState = _InjuerdState;
             State = InjuerdState;
         }
@@ -75,6 +77,10 @@ public class EnemyAI : AIBOT{
             
         }
 
+    }
+
+    public override void OnHit(){
+        HitEffect._instance.HitReaction(GetComponentInChildren<SkinnedMeshRenderer>(),HitMatrial);
     }
 }
 

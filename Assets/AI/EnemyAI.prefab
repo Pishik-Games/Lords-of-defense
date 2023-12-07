@@ -54,6 +54,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   AIAnimation: {fileID: 0}
   damage: 1
+  HitMatrial: {fileID: 2100000, guid: 8fe8a6b0b682e314ba09430a9679aa5b, type: 2}
 --- !u!195 &4830608020258791527
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -961,6 +962,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a, type: 2}
   - {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

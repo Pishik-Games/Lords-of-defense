@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-public class Player : MonoBehaviour , HitReaction
-{
+public class Player : MonoBehaviour , HitReaction{
     public float speed = 10.0f;
 
     public HealthManager playerHealthManager;
@@ -59,6 +58,9 @@ public class Player : MonoBehaviour , HitReaction
     }
 
     public void OnGetHit(){
+        if(playerHealthManager.Health <= 0){
+            Die();
+        }
     }
 
     private void Injuerd()

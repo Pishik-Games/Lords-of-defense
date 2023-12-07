@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class AIBOT : MonoBehaviour{
+public abstract class AIBOT : MonoBehaviour ,HitReaction {
     public NavMeshAgent Agent;
     public BaseState _state;
 
@@ -25,4 +25,6 @@ public abstract class AIBOT : MonoBehaviour{
         Destroy(this.gameObject);
         
     }
+
+    public abstract void OnHit();
 }
