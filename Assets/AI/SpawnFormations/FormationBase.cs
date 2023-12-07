@@ -7,6 +7,7 @@ public abstract class FormationBase : MonoBehaviour {
     [SerializeField] [Range(0, 1)] protected float _noise = 0;
     [SerializeField] public float Spread = 1;
     public abstract IEnumerable<Vector3> EvaluatePoints();
+    public abstract IEnumerable<Vector3> EvaluatePoints(int numbers);
 
     public Vector3 GetNoise(Vector3 pos) {
         var noise = Mathf.PerlinNoise(pos.x * _noise, pos.z * _noise);

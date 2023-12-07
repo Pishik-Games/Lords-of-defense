@@ -25,7 +25,7 @@ public class WaveManager : MonoBehaviour
     public Transform _parent;
     [SerializeField] public float _unitSpeed = 2;
 
-    public int SpawnCount = 1;
+    [Tooltip("Square roots 2")]public int SpawnCount = 1;
 
     
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class WaveManager : MonoBehaviour
     }
     private void SetFormation() {
         _points.Clear();
-        _points = Formation.EvaluatePoints().ToList();
+        _points = Formation.EvaluatePoints(SpawnCount).ToList();
         Spawn(_points);
             // if (_points.Count > _spawnedUnits.Count) {
             //     var remainingPoints = _points.Skip(_spawnedUnits.Count);

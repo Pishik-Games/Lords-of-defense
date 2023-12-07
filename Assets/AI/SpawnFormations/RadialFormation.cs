@@ -35,4 +35,9 @@ public class RadialFormation : FormationBase {
             ringOffset += _ringOffset;
         }
     }
+
+    public override IEnumerable<Vector3> EvaluatePoints(int numbers)
+    {
+        throw new System.NotImplementedException();
+    }
 }
