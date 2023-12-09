@@ -17,12 +17,13 @@ public class AutoFire : MonoBehaviour{
 
     public void ShootProjectile(){
         if (!(enemiesInRange.Count <= 0) ){
+            var TargetIndex = GetNearestIndex();
+            var Enemy = enemiesInRange[TargetIndex];
+            WatchTowards(Enemy.transform.position);
             if ((Time.time - LastShotTime) > frequency){
-                var TargetIndex = GetNearestIndex();
                 if (TargetIndex >= 0){
                     try{
-                        var Enemy = enemiesInRange[TargetIndex];
-                        ShootTowards(Enemy.transform.position);
+                        ShootTowards();
                     }
                     catch (System.Exception){
                         enemiesInRange.RemoveAt(TargetIndex);
@@ -34,14 +35,17 @@ public class AutoFire : MonoBehaviour{
         }
     }
 
-    private void ShootTowards(Vector3 towards){
-            Vector3 normalizedDirection = (towards - Player.transform.position).normalized;
-            Player.transform.forward = new(normalizedDirection.x, 0, normalizedDirection.z);
+    private void ShootTowards(){ 
             GameObject newProjectile = Instantiate(projectile, Player.transform.position, Quaternion.identity);
             Vector3 forwardDirection = Player.transform.forward;
             Quaternion additionalRotation = Quaternion.Euler(0f, 90f, 0f);
             Vector3 rotatedForward = additionalRotation * forwardDirection;
             newProjectile.transform.rotation = Quaternion.LookRotation(rotatedForward);
+    }
+    private void WatchTowards(Vector3 towards){
+        Vector3 normalizedDirection = (towards - Player.transform.position).normalized;
+        Player.transform.forward = new(normalizedDirection.x, 0, normalizedDirection.z);
+        
     }
     private int GetNearestIndex(){
         int nearestIndex = -1;
