@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AutoFire : MonoBehaviour
 {
-    GameObject Player;
+    public bool isShooting = false;
+    private GameObject Player;
     public float frequency = 1.0f;
 
     private float LastShotTime = 0;
@@ -18,6 +19,8 @@ public class AutoFire : MonoBehaviour
 
     public void ShootProjectile(){
         if (!(enemiesInRange.Count <= 0) ){
+
+            isShooting = true;
             if ((Time.time - LastShotTime) > frequency){
                 var TargetIndex = GetNearestIndex();
                 if (TargetIndex >= 0){
@@ -32,7 +35,9 @@ public class AutoFire : MonoBehaviour
 
                 LastShotTime = Time.time;
             }
-        }  
+        }  else{
+            isShooting = false;
+        }
     }
 
     private void ShootTowards(Vector3 towards){
@@ -76,8 +81,7 @@ public class AutoFire : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
-        {
+        if (other.CompareTag("Enemy")){
             var Enemy = other.gameObject;
             enemiesInRange.Add(Enemy);
             enemiesOutRange.Remove(Enemy);

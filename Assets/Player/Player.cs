@@ -43,7 +43,7 @@ public class Player : MonoBehaviour , HitReaction{
 
         transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
 
-        if (moveDirection != Vector3.zero)
+        if (moveDirection != Vector3.zero && !autoFire.isShooting)
         {
             transform.forward = moveDirection;
         }
