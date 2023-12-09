@@ -32,10 +32,7 @@ public class Player : MonoBehaviour , HitReaction{
     {
         Injuerd();
         MoveAndTurn();
-    }
-    private void FixedUpdate() {
         autoFire.ShootProjectile();
-        
     }
 
     private void MoveAndTurn(){
@@ -43,7 +40,7 @@ public class Player : MonoBehaviour , HitReaction{
 
         transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
 
-        if (moveDirection != Vector3.zero && !autoFire.isShooting)
+        if (moveDirection != Vector3.zero && autoFire.enemiesInRange.Count <= 0)
         {
             transform.forward = moveDirection;
         }

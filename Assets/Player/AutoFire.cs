@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoFire : MonoBehaviour
-{
-    public bool isShooting = false;
+public class AutoFire : MonoBehaviour{
     private GameObject Player;
     public float frequency = 1.0f;
 
@@ -19,8 +17,6 @@ public class AutoFire : MonoBehaviour
 
     public void ShootProjectile(){
         if (!(enemiesInRange.Count <= 0) ){
-
-            isShooting = true;
             if ((Time.time - LastShotTime) > frequency){
                 var TargetIndex = GetNearestIndex();
                 if (TargetIndex >= 0){
@@ -35,14 +31,12 @@ public class AutoFire : MonoBehaviour
 
                 LastShotTime = Time.time;
             }
-        }  else{
-            isShooting = false;
         }
     }
 
     private void ShootTowards(Vector3 towards){
-        Vector3 normalizedDirection = (towards - Player.transform.position).normalized;
-        Player.transform.forward = new(normalizedDirection.x, 0, normalizedDirection.z);
+            Vector3 normalizedDirection = (towards - Player.transform.position).normalized;
+            Player.transform.forward = new(normalizedDirection.x, 0, normalizedDirection.z);
             GameObject newProjectile = Instantiate(projectile, Player.transform.position, Quaternion.identity);
             Vector3 forwardDirection = Player.transform.forward;
             Quaternion additionalRotation = Quaternion.Euler(0f, 90f, 0f);
