@@ -32,7 +32,6 @@ public class HealthManager : MonoBehaviour
 
     public void Damage(int damage){
         Health = Health - damage;
-        Debug.Log("damage " + damage);
     }
 
     public void Heal(int heal){

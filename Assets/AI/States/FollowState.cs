@@ -21,14 +21,14 @@ public class FollowState : BaseState
         if (Agent == null || agentScript == null)
         {
             Debug.Log("Agent or agentScript is null");
+            return;
         }
-        if (Agent.stoppingDistance < Vector3.Distance(
-            LastPositionTarget,
-                Target.transform.position)){
-            LastPositionTarget = Target.transform.position;
-            Follow(LastPositionTarget);
-        }else if (Agent.remainingDistance <= Agent.stoppingDistance){
+        LastPositionTarget = Target.transform.position;
+        var Distance = Vector3.Distance(agentScript.transform.position, LastPositionTarget);
+        if (Agent.stoppingDistance >= Distance){
             agentScript.Attack();
+        }else{
+            Follow(LastPositionTarget);
         }
         
     }

@@ -69,10 +69,11 @@ public class EnemyAI : AIBOT {
     // public void OnTriggerEnter(Collider other) {
     // }
 
-    public void AttackAnimationHit(){
+    public void AttackAnimationHit(){ // call by Attack Animation
+        Debug.Log("AttackAnimationHit");
         Target = GameObject.FindGameObjectWithTag("Player").gameObject;
         if (Vector3.Distance(transform.position,Target.transform.position) <= Agent.stoppingDistance){
-            Target.GetComponent<HealthManager>().Damage(damage);
+            Target.GetComponent<Player>().OnHit();
             Debug.Log("attack Damage Deliverd");
             
         }

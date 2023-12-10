@@ -11,15 +11,18 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isFollowing
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1909939740952433399}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.24723196
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 1.0664899
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -47,7 +50,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 18c683f6167dbf84d91c818fa14a7e14, type: 3}
+  m_Motion: {fileID: 7400000, guid: 07e24cbb0b51ece4e93c6823b2bd56b7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -75,7 +78,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a9e82453b26b1e346962cadcba80556a, type: 3}
+  m_Motion: {fileID: 7400000, guid: a2ca1259c28b754448ebc963a3e4a4fb, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -126,6 +129,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isFollowing
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8526103484675037729}
   m_Solo: 0
@@ -150,6 +156,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isFollowing
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1909939740952433399}
@@ -185,9 +194,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.20170796
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 1.0093639
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -203,6 +212,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isFollowing
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2240105345017402047}
@@ -288,7 +300,7 @@ AnimatorStateMachine:
     m_Position: {x: 300, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8526103484675037729}
-    m_Position: {x: 520, y: 210, z: 0}
+    m_Position: {x: 540, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2240105345017402047}
     m_Position: {x: 300, y: 310, z: 0}

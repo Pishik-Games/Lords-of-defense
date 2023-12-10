@@ -19,13 +19,13 @@ public class Player : MonoBehaviour , HitReaction{
     private void Awake() {
         playerHealthManager =  gameObject.AddComponent<HealthManager>();
         autoFire = GetComponentInChildren<AutoFire>();
-        playerHealthManager.SetHealthManagerOnHit(() => {
-            Debug.Log("Player Got Damage");
-            Debug.Log("Health " + playerHealthManager.Health);
-            if (playerHealthManager.Health <= 0){
-                Die();
-            }
-        });
+        // playerHealthManager.SetHealthManagerOnHit(() => {
+        //     Debug.Log("Player Got Damage");
+        //     Debug.Log("Health " + playerHealthManager.Health);
+        //     if (playerHealthManager.Health <= 0){
+        //         Die();
+        //     }
+        // });
     }
 
     private void Update()
@@ -70,6 +70,8 @@ public class Player : MonoBehaviour , HitReaction{
     }
 
     public void OnHit(){
-        
+        playerHealthManager.Damage(1);
+        Debug.Log("Player Heatlh:"+playerHealthManager.Health);
+        OnGetHit();
     }
 }

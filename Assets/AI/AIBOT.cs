@@ -19,8 +19,7 @@ public abstract class AIBOT : MonoBehaviour ,HitReaction {
     public abstract void Attack();
     public abstract void Injuerd();
 
-    public virtual void DestroyOnDie(){
-        Debug.Log(this.gameObject.name+" Died!");
+    public virtual void DestroyOnDie(){;
         WaveManager._instance.RemoveSpawnedEnemyAI(this.gameObject);
         Destroy(this.gameObject);
         

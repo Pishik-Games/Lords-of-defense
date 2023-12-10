@@ -69,11 +69,6 @@ public class AutoFire : MonoBehaviour{
                 nearestIndex = i;
             }
         }
-        if (true)
-        {
-            
-        }
-        Debug.Log(nearestIndex);
         return nearestIndex;
     }
 

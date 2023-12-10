@@ -28,9 +28,7 @@ public class InjuerdState : BaseState
     public void GetHit(){
         var agentHealthManager = agentScript.healthManager;
         agentHealthManager.Damage(50);
-        Debug.Log(agentHealthManager.Health);
         if (agentHealthManager.Health <= 0){
-            Debug.Log(agentHealthManager.Health);
             Die();
         }else{
             agentScript.Follow();
