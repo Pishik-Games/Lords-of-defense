@@ -8,7 +8,8 @@ public class PlayerCamera : MonoBehaviour
     public GameObject PlayerToFollow;
     private Vector3 LastPlayerPos;
 
-    public int Offset = 10;
+    public int OffsetY = 30;
+    public int OffsetZ = -15;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +28,8 @@ public class PlayerCamera : MonoBehaviour
         if (LastPlayerPos != PlayerToFollow.transform.position){
             LastPlayerPos = PlayerToFollow.transform.position;
             var pos = new Vector3(PlayerToFollow.transform.position.x ,
-                PlayerToFollow.transform.position.y + Offset,
-                    PlayerToFollow.transform.position.z + Offset * -1);
+                PlayerToFollow.transform.position.y + OffsetY,
+                    PlayerToFollow.transform.position.z + OffsetZ);
             transform.position = pos;
         }
         

@@ -6,6 +6,19 @@ public class AutoFire : MonoBehaviour{
     private GameObject Player;
     public float frequency = 1.0f;
 
+    private float range;
+    public float Range{
+        set {
+            range = value;
+            transform.localScale = new Vector3(range, range, range); }
+        get { return range; }
+    }
+
+    public void Awake() {
+        Range = transform.localScale.x;
+    }
+
+
     private float LastShotTime = 0;
 
     public GameObject projectile;
