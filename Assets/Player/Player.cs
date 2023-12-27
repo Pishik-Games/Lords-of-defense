@@ -10,7 +10,7 @@ public class Player : MonoBehaviour , HitReaction{
     public HealthManager playerHealthManager;
     public GameObject enemiesOutRange;
     public GameObject enemiesInRange;
-    public VariableJoystick variableJoystick;
+    public Joystick Joystick;
 
     private Vector3 moveDirection;
 
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour , HitReaction{
     private void Awake() {
         playerHealthManager =  gameObject.AddComponent<HealthManager>();
         autoFire = GetComponentInChildren<AutoFire>();
+        Joystick = FindObjectOfType<Joystick>().GetComponent<Joystick>();
         // playerHealthManager.SetHealthManagerOnHit(() => {
         //     Debug.Log("Player Got Damage");
         //     Debug.Log("Health " + playerHealthManager.Health);
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour , HitReaction{
     }
 
     private void MoveAndTurn(){
-        moveDirection = new Vector3(variableJoystick.Horizontal, 0, variableJoystick.Vertical);
+        moveDirection = new Vector3(Joystick.Horizontal, 0, Joystick.Vertical);
 
         transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
 
