@@ -4,22 +4,24 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-public class Player : MonoBehaviour , HitReaction{
+public class Player : MonoBehaviour, HitReaction {
     public float speed = 10.0f;
 
     public HealthManager playerHealthManager;
     public GameObject enemiesOutRange;
     public GameObject enemiesInRange;
-    public Joystick Joystick;
+    public FloatingJoystick Joystick;
 
     private Vector3 moveDirection;
 
     private AutoFire autoFire;
 
+    private static bool playerIsMoving = false;
+
     private void Awake() {
-        playerHealthManager =  gameObject.AddComponent<HealthManager>();
+        playerHealthManager = gameObject.AddComponent<HealthManager>();
         autoFire = GetComponentInChildren<AutoFire>();
-        Joystick = FindObjectOfType<Joystick>().GetComponent<Joystick>();
+        Joystick = FindObjectOfType<FloatingJoystick>().GetComponent<FloatingJoystick>();
         // playerHealthManager.SetHealthManagerOnHit(() => {
         //     Debug.Log("Player Got Damage");
         //     Debug.Log("Health " + playerHealthManager.Health);
@@ -33,24 +35,27 @@ public class Player : MonoBehaviour , HitReaction{
     {
         Injuerd();
         MoveAndTurn();
-        autoFire.ShootProjectile();
+        Debug.Log(playerIsMoving);
+        if (!playerIsMoving){
+            autoFire.ShootProjectile();
+        }
     }
 
-    private void MoveAndTurn(){
+    private void MoveAndTurn() {
+        playerIsMoving = FloatingJoystick.isActive ? true : false;
+        if (!playerIsMoving) return;
         moveDirection = new Vector3(Joystick.Horizontal, 0, Joystick.Vertical);
 
         transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
 
-        if (moveDirection != Vector3.zero && autoFire.enemiesInRange.Count <= 0)
-        {
+        if (moveDirection != Vector3.zero ){ // && autoFire.enemiesInRange.Count <= 0
             transform.forward = moveDirection;
         }
     }
 
 
     private void OnTriggerExit(Collider other){
-        if (other.gameObject.name == "World Border")
-        {
+        if (other.gameObject.name == "World Border"){
             EditorApplication.ExitPlaymode();
         }
     }
