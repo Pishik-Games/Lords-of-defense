@@ -2,16 +2,18 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class InjuerdState : BaseState
-{
+public class InjuerdState : BaseState{
+
+    private EnemyAIHealth enemyAIHealth;
     public InjuerdState(NavMeshAgent agent) : base(agent){
         this.Agent = agent;
+        enemyAIHealth = agentScript.enemyAIHealth;
+
     }
     //public GameObject Target;
 
     public override void enter(){
-      //  Target = GameObject.Find("Player").gameObject;
-        GetHit();
+        
     }
 
     public override void fixedUpdate(){
@@ -25,15 +27,8 @@ public class InjuerdState : BaseState
         //Target = null;
     }
 
-    public void GetHit(){
-        var agentHealthManager = agentScript.healthManager;
-        agentHealthManager.Damage(50);
-        if (agentHealthManager.Health <= 0){
-            Die();
-        }else{
-            agentScript.Follow();
-        }
-        agentScript.OnHit();
+    public void GetHit(float damage){
+        enemyAIHealth.TakeDamage(damage);
     }
 
     public void Die(){

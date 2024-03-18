@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 public class WaveManager : MonoBehaviour
 {
-    public static WaveManager _instance;
+    [Inject]
+    private MatchManager matchManager;
+    [Inject]
+    private EnemyFactory enemyFactory;
 
     public static WaveStates CurrentWaveState;
     private FormationBase _formation;
@@ -19,8 +23,7 @@ public class WaveManager : MonoBehaviour
         set => _formation = value;
     }
     public GameObject SpawnPrefab;
-    public GameObject SpawnPositon;
-    public List<GameObject> _spawnedUnits = new List<GameObject>();
+    public static List<GameObject> _spawnedUnits = new List<GameObject>();
     public List<Vector3> _points = new List<Vector3>();
     public Transform _parent;
     [SerializeField] public float _unitSpeed = 2;
@@ -30,9 +33,7 @@ public class WaveManager : MonoBehaviour
     
     // Start is called before the first frame update
     public void Awake(){
-        _instance = this;
         WaveStart();
-        
     }
 
     // Update is called once per frame
@@ -43,8 +44,10 @@ public class WaveManager : MonoBehaviour
     }
 
     public void WaveStart(){
-        CurrentWaveState = WaveStates.insideWave;
-        SetFormation();
+        if (GameStateManager.GameState == GameStateManager.GameStates.MainGameIsRunning){
+            CurrentWaveState = WaveStates.insideWave;
+            SetFormation();
+        }
     }
     private void SetFormation() {
         _points.Clear();
@@ -60,14 +63,13 @@ public class WaveManager : MonoBehaviour
 
     private void Spawn(IEnumerable<Vector3> points) {
         foreach (var pos in points) {
-            var unit = Instantiate(SpawnPrefab, transform.position + pos, Quaternion.identity, _parent);
-            unit.gameObject.name = SpawnPrefab.gameObject.name + Time.deltaTime.ToString();
+            var unit = enemyFactory.Spawn(SpawnPrefab, transform.position + pos, Quaternion.identity, _parent);
             _spawnedUnits.Add(unit);
         }
     }
 
     public Vector3 GetRandomPosForSPawn(){
-      var worldBorder = GameObject.Find("World Border");
+        var worldBorder = GameObject.Find("World Border");
         var RandX = UnityEngine.Random.Range(worldBorder.transform.localScale.x * -1,worldBorder.transform.localScale.x);
         var RandZ = UnityEngine.Random.Range(   worldBorder.transform.localScale.z * -1,worldBorder.transform.localScale.z);
 
@@ -85,12 +87,19 @@ public class WaveManager : MonoBehaviour
 
     void WaveExit(){
         CurrentWaveState = WaveStates.outsideWAve;
-        MatchManager._instance.OnWaveEnd();
+        matchManager.OnWaveEnd();
     }
 
 
-    public void RemoveSpawnedEnemyAI(GameObject enemyAI){
+    public void RemoveDiedEnemyAI(GameObject enemyAI){
         _spawnedUnits.Remove(enemyAI);
+    }
+
+    public void DestroyAllEnemies(){
+        foreach (var unit in _spawnedUnits){
+            Destroy(unit);
+        }
+        _spawnedUnits.Clear();
     }
 
     public enum WaveStates{

@@ -1,44 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-public interface HitReaction{
-    public void OnHit();
-}
-public class HealthManager : MonoBehaviour
-{
-    public HealthManager(callBack _onHit){
-        OnHit = _onHit;
-    }
-    public void SetHealthManagerOnHit(callBack _onHit){
-        OnHit = _onHit;
-    }
-    public callBack OnHit;
-    public delegate void callBack();
-    private int MaxHealth = 100;
-    private int _health;
-    
-    public int Health{
-        set{
-            _health = value;
-        }
-        get{ 
-            return _health; 
-        }
-    }
-    public void Awake() {
-        MaxHealth = 100;
-        Health = MaxHealth;
-    }
+// using System.Collections;
+// using UnityEngine;
+// public class HealthManager : MonoBehaviour{
+//     public IHealth playerHealth;
 
-    public void Damage(int damage){
-        Health = Health - damage;
-    }
-
-    public void Heal(int heal){
-        if (heal + Health <= MaxHealth){
-            Health = MaxHealth;
-        }else{
-            Health += heal;
-        }
-    }
-}
+//     public abstract void TakeDamage(float damage);
+//     public abstract void Heal(float damage);
+// }

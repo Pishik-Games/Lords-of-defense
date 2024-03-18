@@ -1,18 +1,22 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class AIBOT : MonoBehaviour ,HitReaction {
-    public NavMeshAgent Agent;
-    public BaseState _state;
+public abstract class AIBOT : MonoBehaviour {
 
-    public HealthManager healthManager;
-    public abstract BaseState State{get;set;}
-    public GameObject Target;
+    public EnemyAIHealth enemyAIHealth;
+    public NavMeshAgent agent;
+    public BaseState _state;
+    public abstract BaseState state{get;set;}
+
+    //DI
+    public WaveManager waveManager;
+    
+    public GameObject target;
 
     public FollowState followState;
 
-    public InjuerdState InjuerdState;
-    public AttackState AttackState;
+    public InjuerdState injuerdState;
+    public AttackState attackState;
     public AIAnimations AIAnimation;
     public int damage = 1;
     public abstract void Follow();
@@ -20,10 +24,8 @@ public abstract class AIBOT : MonoBehaviour ,HitReaction {
     public abstract void Injuerd();
 
     public virtual void DestroyOnDie(){;
-        WaveManager._instance.RemoveSpawnedEnemyAI(this.gameObject);
+        waveManager.RemoveDiedEnemyAI(this.gameObject);
         Destroy(this.gameObject);
         
     }
-
-    public abstract void OnHit();
 }

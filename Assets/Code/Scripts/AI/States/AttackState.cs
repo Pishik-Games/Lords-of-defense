@@ -8,20 +8,19 @@ public class AttackState : BaseState
     public AttackState(NavMeshAgent agent) : base(agent){
         this.Agent = agent;
     }
-    public GameObject Target;
-
+    private GameObject AgentTarget;
     public override void enter(){
-        Target = GameObject.Find("Player").gameObject;
+        AgentTarget = agentScript.target;
         agentScript.AIAnimation.AttackAnimation();
     }
 
     public override void fixedUpdate(){
-        LastTargetPos = Target.transform.position;
+        LastTargetPos = AgentTarget.transform.position;
         var Distance = Vector3.Distance(agentScript.transform.position, LastTargetPos);
         if (Distance > Agent.stoppingDistance){
             agentScript.Follow();
         }else{
-            agentScript.transform.LookAt(Target.transform.position);
+            agentScript.transform.LookAt(AgentTarget.transform.position);
         }
     }
     public override void update(){
@@ -30,7 +29,7 @@ public class AttackState : BaseState
 
 
     public override void exit(){
-        Target = null;
+        AgentTarget = null;
         agentScript.AIAnimation.StopAttackAnimation();
     }
 

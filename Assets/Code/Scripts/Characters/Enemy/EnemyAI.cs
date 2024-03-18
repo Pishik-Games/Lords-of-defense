@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : AIBOT {
+public class EnemyAI : AIBOT , ITouchable {
 
     public Material HitMatrial;
-    public override BaseState State { 
+    public override BaseState state { 
         get {
             return _state; 
         }          
@@ -19,10 +20,11 @@ public class EnemyAI : AIBOT {
         }   
     }
 
-    public void Awake() {
-        Agent = this.gameObject.GetComponent<NavMeshAgent>();
+    public void Awake(){
+        enemyAIHealth = gameObject.AddComponent<EnemyAIHealth>();
+        enemyAIHealth.SetEnemyAIScript(this);
+        agent = this.gameObject.GetComponent<NavMeshAgent>();
         AIAnimation = gameObject.AddComponent<AIAnimations>();
-        healthManager = gameObject.AddComponent<HealthManager>();
     }
     public void Start() {
         Follow();
@@ -30,59 +32,66 @@ public class EnemyAI : AIBOT {
 
 
     public void FixedUpdate() {
-        if (State != null){
-            State.fixedUpdate(); 
+        if (state != null){
+            if (target)
+                state.fixedUpdate(); 
         }else{
         }
     }
 
     public override void Attack(){
-        if (this.AttackState != null){
-            State = AttackState;
+        if (this.attackState != null){
+            state = attackState;
         }else{
-            var _AttackState = new AttackState(Agent);
-            AttackState = _AttackState;
-            State = AttackState;
+            var _AttackState = new AttackState(agent);
+            attackState = _AttackState;
+            state = attackState;
         }
     }
 
     public override void Follow(){
         if (this.followState != null){
-            State = followState;
+            state = followState;
         }else{
-            var _FollowState = new FollowState(Agent);
+            var _FollowState = new FollowState(agent);
             followState = _FollowState;
-            State = followState;
+            state = followState;
         }
     }
 
     public override void Injuerd(){
-        if (this.InjuerdState != null){
-            State = InjuerdState;
+        if (this.injuerdState != null){
+            state = injuerdState;
         }else{
-            var _InjuerdState = new InjuerdState(Agent);
-            InjuerdState = _InjuerdState;
-            State = InjuerdState;
+            var _InjuerdState = new InjuerdState(agent);
+            injuerdState = _InjuerdState;
+            state = injuerdState;
         }
     }
     
     // public void OnTriggerEnter(Collider other) {
     // }
 
-    public void AttackAnimationHit(){ // call by Attack Animation
-        Debug.Log("AttackAnimationHit");
-        Target = GameObject.FindGameObjectWithTag("Player").gameObject;
-        if (Vector3.Distance(transform.position,Target.transform.position) <= Agent.stoppingDistance){
-            Target.GetComponent<Player>().OnHit();
-            Debug.Log("attack Damage Deliverd");
-            
-        }
+    // Its called by Attack Animation Event
+    public void AttackAnimationHit(){ 
+        if (Vector3.Distance(transform.position,target.transform.position) <= agent.stoppingDistance)
+            target.GetComponent<Health>().OnHit(damage);
+        
 
     }
 
-    public override void OnHit(){
-        HitEffect._instance.HitReaction(GetComponentInChildren<SkinnedMeshRenderer>(),HitMatrial);
+    public void Die(){
+        this.DestroyOnDie();
     }
+
+    public void OnTouch(){
+        Debug.Log("Touche");
+        AutoFireProjectile.SetPlayerTarget(this.gameObject);
+    }
+
+    // public override void OnHit(){
+    //     HitEffect._instance.HitReaction(GetComponentInChildren<SkinnedMeshRenderer>(),HitMatrial);
+    // }
 }
 
 /* 

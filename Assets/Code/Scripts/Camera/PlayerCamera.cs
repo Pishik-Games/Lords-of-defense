@@ -18,19 +18,21 @@ public class PlayerCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        followPlayer();
+        if (GameStateManager.GameState == GameStateManager.GameStates.MainGameIsRunning)
+        {
+            followPlayer();
+        }
     }
 
-    private void followPlayer()
-    {
+    private void followPlayer(){
         if (LastPlayerPos != PlayerToFollow.transform.position){
-            LastPlayerPos = PlayerToFollow.transform.position;
-            var pos = new Vector3(PlayerToFollow.transform.position.x ,
-                PlayerToFollow.transform.position.y + OffsetY,
-                    PlayerToFollow.transform.position.z + OffsetZ);
-            transform.position = pos;
+                LastPlayerPos = PlayerToFollow.transform.position;
+                var pos = new Vector3(PlayerToFollow.transform.position.x ,
+                    PlayerToFollow.transform.position.y + OffsetY,
+                        PlayerToFollow.transform.position.z + OffsetZ);
+                transform.position = pos;
         }
         
     }

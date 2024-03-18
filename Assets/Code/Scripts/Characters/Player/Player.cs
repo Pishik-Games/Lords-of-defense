@@ -3,47 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using Unity.VisualScripting;
+using Zenject;
 
-public class Player : MonoBehaviour, HitReaction {
+public class Player : MonoBehaviour {
+    public PlayerHealth playerHealth;
+    public PlayerAttack playerAttack;
+
+    [Inject]
+    public PlayerAnimHandler animHandler;
+
+    public CharactersStats charactersStats;
     public float speed = 10.0f;
-
-    public HealthManager playerHealthManager;
-    public GameObject enemiesOutRange;
-    public GameObject enemiesInRange;
     public FloatingJoystick Joystick;
 
-    private Vector3 moveDirection;
 
-    private AutoFire autoFire;
+    private Vector3 moveDirection;
 
     private static bool playerIsMoving = false;
 
     private void Awake() {
-        playerHealthManager = gameObject.AddComponent<HealthManager>();
-        autoFire = GetComponentInChildren<AutoFire>();
+        charactersStats = GetComponentInChildren<CharactersStatsHolder>().CharactersStat;
         Joystick = FindObjectOfType<FloatingJoystick>().GetComponent<FloatingJoystick>();
-        // playerHealthManager.SetHealthManagerOnHit(() => {
-        //     Debug.Log("Player Got Damage");
-        //     Debug.Log("Health " + playerHealthManager.Health);
-        //     if (playerHealthManager.Health <= 0){
-        //         Die();
-        //     }
-        // });
+
+
+        
+        SetUpPlayerHealth();
+        SetUpPlayerAttack();
+
+    }
+    private void SetUpPlayerHealth(){
+        playerHealth = gameObject.GetOrAddComponent<PlayerHealth>();
+        playerHealth.playerScript = this;
+        playerHealth.MaxHealth = charactersStats.maxHealth;
+    }
+    private void SetUpPlayerAttack(){
+        playerAttack = gameObject.GetOrAddComponent<PlayerAttack>();
+        PlayerAttack.damage = charactersStats.damage;
+        playerAttack.SetUpProjectilePrefab(charactersStats.ProjectilePrefab);
     }
 
-    private void Update()
-    {
-        Injuerd();
-        MoveAndTurn();
-        Debug.Log(playerIsMoving);
-        if (!playerIsMoving){
-            autoFire.ShootProjectile();
+    private void Update(){
+        
+        if (GameStateManager.GameState == GameStateManager.GameStates.MainGameIsRunning){
+            playerIsMoving = FloatingJoystick.isActive;
+            if (!playerIsMoving){
+                animHandler.isWalking = false;
+                playerAttack.Attack();
+            }else{
+                animHandler.isWalking = true;
+                animHandler.isAttacking = false;
+                MoveAndTurn();
+            }
         }
     }
 
     private void MoveAndTurn() {
-        playerIsMoving = FloatingJoystick.isActive ? true : false;
-        if (!playerIsMoving) return;
         moveDirection = new Vector3(Joystick.Horizontal, 0, Joystick.Vertical);
 
         transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
@@ -60,24 +75,11 @@ public class Player : MonoBehaviour, HitReaction {
         }
     }
 
-    public void OnGetHit(){
-        if(playerHealthManager.Health <= 0){
-            Die();
-        }
+
+
+    public void Die(){
+        MatchManager.LoseGame();
+        Destroy(this.gameObject);
     }
 
-    private void Injuerd()
-    {
-
-    }
-
-    private void Die(){
-        Destroy(gameObject);
-    }
-
-    public void OnHit(){
-        playerHealthManager.Damage(1);
-        Debug.Log("Player Heatlh:"+playerHealthManager.Health);
-        OnGetHit();
-    }
 }
