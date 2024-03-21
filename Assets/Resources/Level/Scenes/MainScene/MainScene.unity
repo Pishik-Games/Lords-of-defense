@@ -912,7 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3643369257cf0b148b696a0ea6850a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpawnTime: 15
+  maxSpawnTime: 10
 --- !u!1 &629940731
 GameObject:
   m_ObjectHideFlags: 0
