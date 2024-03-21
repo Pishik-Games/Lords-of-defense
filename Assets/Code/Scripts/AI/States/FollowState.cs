@@ -1,17 +1,27 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using Zenject;
 
 public class FollowState : BaseState
 {
-
     public FollowState(NavMeshAgent agent) : base(agent){
         this.Agent = agent;
     }
 
     private Vector3 LastPositionTarget;
+    private static GameObject player ;
+    private static GameObject TownHall ;
+
+    public void Awake()
+    {
+        player =  GameObject.FindObjectOfType<Player>().gameObject;
+        TownHall = GameObject.FindObjectOfType<TownHall>().gameObject;
+    }
 
     public override void enter(){
+        if(player== null||TownHall == null)
+            this.Awake();
         agentScript.target = FindTarget();
         agentScript.AIAnimation.FollowAnimation();
     }
@@ -43,9 +53,8 @@ public class FollowState : BaseState
         Agent.SetDestination(TargetPosition);
     }
 
+
     private GameObject FindTarget(){
-        var player = GameObject.FindObjectOfType<Player>().gameObject;
-        var TownHall = GameObject.FindObjectOfType<TownHall>().gameObject;
         var agentPos = agentScript.transform.position;
 
         var playerDistance = Vector3.Distance(agentPos, player.transform.position);
