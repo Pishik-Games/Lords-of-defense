@@ -31,6 +31,7 @@ public abstract class Health : MonoBehaviour{
         }else{
             CurrentHealth += healthCount;
         }
+        Debug.Log("Player Healed "+healthCount+"Count");
         OnHealHandler();
     }
     public abstract void OnHealHandler();

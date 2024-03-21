@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAIHealth: {fileID: 0}
   agent: {fileID: 0}
+  waveManager: {fileID: 0}
   target: {fileID: 0}
   AIAnimation: {fileID: 0}
   damage: 1
@@ -978,7 +979,6 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a, type: 2}
   - {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

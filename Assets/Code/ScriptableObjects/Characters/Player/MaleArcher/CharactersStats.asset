@@ -15,4 +15,5 @@ MonoBehaviour:
   characterName: Arash
   maxHealth: 100
   damage: 20
+  speed: 1
   ProjectilePrefab: {fileID: 6640120981875248076, guid: ce6613f2ab5390a419b09105c9aa593c, type: 3}

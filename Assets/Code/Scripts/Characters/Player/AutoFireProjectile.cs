@@ -11,7 +11,6 @@ public class AutoFireProjectile : MonoBehaviour
     [Inject]
     public PlayerAnimHandler animHandler;
     private GameObject Player;
-    public float frequency = 1.0f;
 
     private float range;
     public float Range
@@ -48,14 +47,12 @@ public class AutoFireProjectile : MonoBehaviour
             try{
                 if(Enemy==null)return;
                 WatchTowards(Enemy.transform.position);
-                if ((Time.time - LastShotTime) > frequency){
                     if (Physics.Raycast(Player.transform.position, Player.transform.forward, out RaycastHit hit)){
                         if (hit.transform.gameObject.CompareTag("Enemy")){
                             ShootTowards();
                             LastShotTime = Time.time;
                         }
                     }
-                }
             }catch (System.Exception e){
                 Debug.LogError(e.ToString());
                 if (Enemy.gameObject == null){
@@ -85,10 +82,8 @@ public class AutoFireProjectile : MonoBehaviour
 
     private GameObject GetTarget(){
         if (SelectedObjByPlayer != null && enemiesInRange.Contains(SelectedObjByPlayer)){
-            Debug.Log(" return SelectedObjByPlayer");
             return SelectedObjByPlayer;
         }
-        Debug.Log("DeselectPlayerTarget");
         DeselectPlayerTarget();
         return GetNearestTarget();
     }

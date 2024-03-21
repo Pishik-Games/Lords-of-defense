@@ -5,5 +5,6 @@ public class CharactersStats : ScriptableObject{
     public string characterName;
     public float maxHealth;
     public float damage;
+    public float speed;
     public GameObject ProjectilePrefab;
 }

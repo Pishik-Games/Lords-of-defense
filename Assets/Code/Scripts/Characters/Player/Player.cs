@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
     private void SetUpPlayerAttack(){
         playerAttack = gameObject.GetOrAddComponent<PlayerAttack>();
         PlayerAttack.damage = charactersStats.damage;
+        playerAttack.fireRate = charactersStats.speed;
         playerAttack.SetUpProjectilePrefab(charactersStats.ProjectilePrefab);
     }
 
