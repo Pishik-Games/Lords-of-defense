@@ -12,9 +12,8 @@ public class EnemyAI : AIBOT , ITouchable {
             return _state; 
         }          
         set {
-            try{
+            if (state != null)
                 _state.exit();
-            }catch{}
             _state = value;
             _state.enter();
         }   
