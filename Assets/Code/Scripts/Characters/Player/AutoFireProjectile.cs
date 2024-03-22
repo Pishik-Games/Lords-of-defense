@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ModestTree;
 using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
@@ -24,7 +25,6 @@ public class AutoFireProjectile : MonoBehaviour
     }
 
 
-    private float LastShotTime = 0;
 
     public GameObject projectile;
     public List<GameObject> enemiesInRange;
@@ -40,23 +40,24 @@ public class AutoFireProjectile : MonoBehaviour
         Player = gameObject.transform.parent.gameObject;
     }
     public void ShootProjectile(){
-        if (enemiesInRange.Count > 0){
+        if (!enemiesInRange.IsEmpty()){
             animHandler.isAttacking = true;
             var Enemy = (isTargetSelectedByPlayer == true) ? GetTarget() : GetNearestTarget();
 
             try{
-                if(Enemy==null)return;
+                if(Enemy==null)
+                    throw new Exception();
                 WatchTowards(Enemy.transform.position);
                     if (Physics.Raycast(Player.transform.position, Player.transform.forward, out RaycastHit hit)){
                         if (hit.transform.gameObject.CompareTag("Enemy")){
                             ShootTowards();
-                            LastShotTime = Time.time;
                         }
                     }
             }catch (System.Exception e){
-                Debug.LogError(e.ToString());
                 if (Enemy.gameObject == null){
                     enemiesInRange.Remove(Enemy);
+                    if (enemiesInRange.IsEmpty())
+                        animHandler.isAttacking = false;
                 }
             }
         }else{
