@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEditor.UIElements;
 
 public class PlayerStatsUI : MonoBehaviour
 {
