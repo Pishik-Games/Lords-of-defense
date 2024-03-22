@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour{
         set{
             _fireRate = value;
             playerAnimHandler.SetAttackSpeed(_fireRate);
+            UpdateFireRateStat(_fireRate);
         }
         get{
             return _fireRate;
@@ -36,6 +37,10 @@ public class PlayerAttack : MonoBehaviour{
 
     public void SetUpProjectilePrefab(GameObject ProjectilePrefab){
         autoFireProjectile.projectile = ProjectilePrefab;
+    }
+
+    public void UpdateFireRateStat(float fireRate){
+        playerStats.fireRate = fireRate;
     }
 
 }

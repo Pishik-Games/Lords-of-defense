@@ -5,19 +5,23 @@ using UnityEngine;
 public class PlayerHealth : Health{
 
     public Player playerScript;
-
+    void Start()
+    {
+        UpdateHealthStat();
+    }
     public override void OnHit(float damage){
         this.TakeDamage(damage);
     }
 
     public override void TakeDamage(float damageCount){
         base.TakeDamage(damageCount);
+        UpdateHealthStat();
 
     }
 
-    public void Heal(float healthCount){
+    public override void Heal(float healthCount){
         base.Heal(healthCount);
-
+        UpdateHealthStat();
     }
 
     public override void OnDamageHandler(){
@@ -28,5 +32,9 @@ public class PlayerHealth : Health{
 
     public override void OnDieHandler(){
         playerScript.Die();
+    }
+
+    public void UpdateHealthStat(){
+        playerStats.health = GetCurrentHealth();
     }
 }

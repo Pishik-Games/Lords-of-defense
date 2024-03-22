@@ -15,6 +15,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>{
     [Header("Player")]
     [SerializeField]public GameObject player;
     [SerializeField]public Player playerScript;
+    [SerializeField] public GameObject playerStatsUI;
     public override void InstallBindings(){
         //Container.Instantiate<ProjectileManager>();
         InstallMatchManager();
@@ -45,5 +46,9 @@ public class GameInstaller : MonoInstaller<GameInstaller>{
         var playerAnimHandler = playerAnimator.gameObject.AddComponent<PlayerAnimHandler>();
         playerAnimHandler.animator = playerAnimator;
         Container.Bind<PlayerAnimHandler>().FromInstance(playerAnimHandler).AsSingle();
+
+        var playerStat = player.AddComponent<playerStats>();
+        var _playerStatsUI = playerStatsUI.AddComponent<PlayerStatsUI>();
+        playerStats.playerStatsUI = _playerStatsUI;
     }
 }
