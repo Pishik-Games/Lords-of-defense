@@ -39,9 +39,8 @@ public class AutoFireProjectile : MonoBehaviour
     private void Start(){
         Player = gameObject.transform.parent.gameObject;
     }
-    public void ShootProjectile(){
+    public void CheckForForwardEnemes(){
         if (!enemiesInRange.IsEmpty()){
-            animHandler.isAttacking = true;
             var Enemy = (isTargetSelectedByPlayer == true) ? GetTarget() : GetNearestTarget();
 
             try{
@@ -50,7 +49,7 @@ public class AutoFireProjectile : MonoBehaviour
                 WatchTowards(Enemy.transform.position);
                     if (Physics.Raycast(Player.transform.position, Player.transform.forward, out RaycastHit hit)){
                         if (hit.transform.gameObject.CompareTag("Enemy")){
-                            ShootTowards();
+                            animHandler.isAttacking = true;
                         }
                     }
             }catch (System.Exception e){
@@ -65,7 +64,7 @@ public class AutoFireProjectile : MonoBehaviour
         }
     }
 
-    private void ShootTowards(){
+    public void ShootTowards(){
         GameObject newProjectile = Instantiate(projectile, Player.transform.position, Quaternion.identity);
 
         var projectileScripts = newProjectile.GetComponent<Projectile>();
