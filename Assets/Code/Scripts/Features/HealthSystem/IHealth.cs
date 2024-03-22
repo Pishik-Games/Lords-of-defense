@@ -34,6 +34,10 @@ public abstract class Health : MonoBehaviour{
         Debug.Log("Player Healed "+healthCount+"Count");
         OnHealHandler();
     }
+
+    public float GetCurrentHealth(){
+        return CurrentHealth;
+    }
     public abstract void OnHealHandler();
     public abstract void OnDamageHandler();
     public abstract void OnDieHandler();
