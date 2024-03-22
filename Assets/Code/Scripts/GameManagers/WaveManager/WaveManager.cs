@@ -28,11 +28,16 @@ public class WaveManager : MonoBehaviour
     public Transform _parent;
     [SerializeField] public float _unitSpeed = 2;
 
+    public bool AutoSpawnCount = false;
     [Tooltip("Square roots 2")]public int SpawnCount = 1;
+    public int SpawnTimes = 0;
 
-    
+
     // Start is called before the first frame update
     public void Awake(){
+        if (AutoSpawnCount){
+            SpawnCount = 0;
+        }
         WaveStart();
     }
 
@@ -51,6 +56,10 @@ public class WaveManager : MonoBehaviour
     }
     private void SetFormation() {
         _points.Clear();
+        SpawnTimes++;
+        if (AutoSpawnCount){
+            SpawnCount = SpawnTimes * SpawnTimes;
+        }
         _points = Formation.EvaluatePoints(SpawnCount).ToList();
         Spawn(_points);
             // if (_points.Count > _spawnedUnits.Count) {
