@@ -11,7 +11,10 @@ public class FollowState : BaseState
 
     private Vector3 LastPositionTarget;
     private static GameObject player ;
-    private static GameObject TownHall ;
+    private static GameObject TownHall;
+    private GameObject _target;
+    private Vector3 _lastTargetPos;
+    private float _nextUpdateTime;
 
     public void Awake()
     {
@@ -26,17 +29,30 @@ public class FollowState : BaseState
         agentScript.AIAnimation.FollowAnimation();
     }
 
-    public override void fixedUpdate(){
-        agentScript.target = FindTarget(); // this most be better to not checking Every Frame 
-        
-        LastPositionTarget = agentScript.target.transform.position;
-        var Distance = Vector3.Distance(agentScript.transform.position, LastPositionTarget);
-        if (Agent.stoppingDistance >= Distance){
-            agentScript.Attack();
-        }else{
-            Follow(LastPositionTarget);
+    public override void fixedUpdate()
+    {
+        if (Time.time > _nextUpdateTime)
+        {
+            _target = FindTarget();
+            _nextUpdateTime = Time.time + 0.5f; // Adjust the update interval (0.5s in this example)
+            if (_target != null)
+            {
+                var agentPos = agentScript.transform.position;
+                var targetPos = _target.transform.position;
+                var distanceSqr = (agentPos - targetPos).sqrMagnitude;
+
+                if (distanceSqr <= Agent.stoppingDistance * Agent.stoppingDistance)
+                {
+                    agentScript.Attack();
+                }
+                else
+                {
+                    Follow(targetPos);
+                }
+
+                _lastTargetPos = targetPos;
+            }
         }
-        
         
     }
     public override void update(){

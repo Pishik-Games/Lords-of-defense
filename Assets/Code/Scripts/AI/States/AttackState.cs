@@ -14,14 +14,20 @@ public class AttackState : BaseState
         agentScript.AIAnimation.AttackAnimation();
     }
 
-    public override void fixedUpdate(){
-        LastTargetPos = AgentTarget.transform.position;
-        var Distance = Vector3.Distance(agentScript.transform.position, LastTargetPos);
-        if (Distance > Agent.stoppingDistance){
-            agentScript.Follow();
-        }else{
-            agentScript.transform.LookAt(AgentTarget.transform.position);
+    public override void fixedUpdate()
+    {
+        var agentPos = agentScript.transform.position;
+        var targetPos = AgentTarget.transform.position;
+        var distanceSqr = (agentPos - targetPos).sqrMagnitude;
+
+        // Early exit to avoid unnecessary calculations
+        if (distanceSqr <= Agent.stoppingDistance * Agent.stoppingDistance)
+        {
+            agentScript.transform.LookAt(targetPos);
+            return;
         }
+
+        agentScript.Follow();
     }
     public override void update(){
 
