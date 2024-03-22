@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using ModestTree;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
-using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine;
 using Zenject;
 
 public class PlayerAnimHandler : MonoBehaviour
