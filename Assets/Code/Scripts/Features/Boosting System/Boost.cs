@@ -24,6 +24,7 @@ namespace BoostingSystem{
     public enum BoostTypes{
         Heal,
         Speed,
+        Range
 
     }
 

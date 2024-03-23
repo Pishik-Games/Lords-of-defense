@@ -25,6 +25,17 @@ public class playerStats : MonoBehaviour
         }
     }
 
+    private static float _range;
+    public static float range{
+        set{
+            _range = value;
+            OnStatsChange();
+        }
+        get{
+            return _range;
+        }
+    }
+
     private static float _moveSpeed;
     public static float moveSpeed{
         set{

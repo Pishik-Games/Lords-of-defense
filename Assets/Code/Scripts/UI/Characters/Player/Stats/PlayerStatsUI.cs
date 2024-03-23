@@ -6,6 +6,7 @@ public class PlayerStatsUI : MonoBehaviour
     
     public Text healthText;
     public Text fireRateText;
+    public Text RangeText;
     //public Text moveSpeedText;
     // Reference other UI components as needed
 
@@ -19,7 +20,8 @@ public class PlayerStatsUI : MonoBehaviour
             {
                 case "healthText" : healthText = text; break;
                 case "fireRateText" : fireRateText = text; break;
-                //case "moveSpeedText" : moveSpeedText = text; break;
+                case "RangeText" : RangeText = text; break;
+                    //case "moveSpeedText" : moveSpeedText = text; break;
             }
         } 
         UpdateUI(); 
@@ -29,6 +31,7 @@ public class PlayerStatsUI : MonoBehaviour
     {
         healthText.text = playerStats.health.ToString();
         fireRateText.text = playerStats.fireRate.ToString();
+        RangeText.text = playerStats.range.ToString();
         //moveSpeedText.text = playerStats.moveSpeed.ToString();
         // Update other UI components as needed
     }

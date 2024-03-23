@@ -10,11 +10,8 @@ namespace BoostingSystem{
         [Inject]
         private  Player player;
         private List<GameObject> boosts = new List<GameObject>();
-        
-        [SerializeField]
-        public List<GameObject> boostPrefabs;
         void Awake(){
-            boosts.AddRange(this.boostPrefabs);
+            LoadBoostPrefabs();
         }
         public GameObject CreateBoost(){
             var randomBoost = boosts[Random.Range(0,boosts.Count)];
@@ -34,6 +31,27 @@ namespace BoostingSystem{
                 randomPosition += new Vector3(0,0,randomZ*2);
 
             return randomPosition;
+        }
+
+        private void LoadBoostPrefabs(){
+            try
+            {
+                // Load prefabs from the Resources folder
+                GameObject[] prefabObjects = Resources.LoadAll<GameObject>("Level/Prefabs/Boosts/") as GameObject[];
+                if (prefabObjects != null)
+                {
+                    foreach (GameObject prefabObject in prefabObjects)
+                    {
+                        boosts.Add(prefabObject);
+                    }
+                }else{
+                    Debug.LogError("failed to load boosts");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Exception while loading prefabs: " + e.Message);
+            }
         }
 
     }

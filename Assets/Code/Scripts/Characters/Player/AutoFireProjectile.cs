@@ -13,15 +13,16 @@ public class AutoFireProjectile : MonoBehaviour
     public PlayerAnimHandler animHandler;
     private GameObject Player;
 
-    private float range;
-    public float Range
+    private float _range;
+    public float range
     {
         set
         {
-            range = value;
-            transform.localScale = new Vector3(range, range, range);
+            _range = value;
+            transform.localScale = new Vector3(_range, _range, _range);
+            playerStats.range = _range;
         }
-        get { return range; }
+        get { return _range; }
     }
 
 
@@ -34,7 +35,7 @@ public class AutoFireProjectile : MonoBehaviour
 
     public void Awake()
     {
-        Range = transform.localScale.x;
+        range = transform.localScale.x;
     }
     private void Start(){
         Player = gameObject.transform.parent.gameObject;
