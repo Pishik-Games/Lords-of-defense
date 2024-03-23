@@ -16,7 +16,7 @@ public class FollowState : BaseState
     private Vector3 _lastTargetPos;
     private float _nextUpdateTime;
 
-    public void Awake()
+    public void Start()
     {
         player =  GameObject.FindObjectOfType<Player>().gameObject;
         TownHall = GameObject.FindObjectOfType<TownHall>().gameObject;
@@ -24,7 +24,7 @@ public class FollowState : BaseState
 
     public override void enter(){
         if(player== null||TownHall == null)
-            this.Awake();
+            this.Start();
         agentScript.target = FindTarget();
         agentScript.AIAnimation.FollowAnimation();
     }

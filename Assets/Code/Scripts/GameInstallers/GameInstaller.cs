@@ -16,12 +16,16 @@ public class GameInstaller : MonoInstaller<GameInstaller>{
     [SerializeField]public GameObject player;
     [SerializeField]public Player playerScript;
     [SerializeField] public GameObject playerStatsUI;
+
+    [Header("Player")]
+    [SerializeField] public GameObject townHall;
     public override void InstallBindings(){
         //Container.Instantiate<ProjectileManager>();
         InstallMatchManager();
         InstallWaveManager();
         InstallBoostingSystem();
         InstallPlayer();
+        InstallTownHall();
     }
 
     private void InstallMatchManager(){
@@ -50,5 +54,16 @@ public class GameInstaller : MonoInstaller<GameInstaller>{
         var playerStat = player.AddComponent<playerStats>();
         var _playerStatsUI = playerStatsUI.AddComponent<PlayerStatsUI>();
         playerStats.playerStatsUI = _playerStatsUI;
+    }
+
+    public void InstallTownHall(){
+        var townHallScript = townHall.AddComponent<TownHall>();
+        var townHalHeathlManger = townHall.AddComponent<TownHalHeathlManger>();
+        townHallScript.townHalHeathlManger = townHalHeathlManger;
+        townHalHeathlManger.townHallScript = townHallScript;
+
+        var townHallStat = townHall.AddComponent<TownHallStats>();
+        var _TownHallStatsUI = townHall.AddComponent<TownHallStatsUI>();
+        TownHallStats.TownHallStatsUI = _TownHallStatsUI;
     }
 }
