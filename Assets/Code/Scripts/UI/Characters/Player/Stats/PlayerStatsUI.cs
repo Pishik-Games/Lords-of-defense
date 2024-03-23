@@ -42,8 +42,8 @@ public class PlayerStatsUI : MonoBehaviour
     public void UpdateUI()
     {
         UpdateHealthUI();
-        fireRateText.text = playerStats.fireRate.ToString();
-        RangeText.text = playerStats.range.ToString();
+        fireRateText.text = playerStats.fireRate.ToString("0.0");
+        RangeText.text = playerStats.range.ToString("0.0");
         //moveSpeedText.text = playerStats.moveSpeed.ToString();
         // Update other UI components as needed
     }
@@ -51,7 +51,7 @@ public class PlayerStatsUI : MonoBehaviour
     public void UpdateHealthUI(){
         var health = playerStats.health;
         var maxHealth = playerStats.maxHealth;
-        healthText.text = health.ToString();
+        healthText.text = health.ToString("0.0");
         healthBar.fillAmount = Mathf.Clamp01(health / maxHealth);
     }
 }
