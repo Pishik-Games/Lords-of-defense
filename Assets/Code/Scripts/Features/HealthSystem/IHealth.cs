@@ -38,6 +38,9 @@ public abstract class Health : MonoBehaviour{
     public float GetCurrentHealth(){
         return CurrentHealth;
     }
+    public float GetMaxHealthCount(){
+        return MaxHealth;
+    }
     public abstract void OnHealHandler();
     public abstract void OnDamageHandler();
     public abstract void OnDieHandler();

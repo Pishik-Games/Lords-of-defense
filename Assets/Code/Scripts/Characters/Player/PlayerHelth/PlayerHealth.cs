@@ -36,5 +36,6 @@ public class PlayerHealth : Health{
 
     public void UpdateHealthStat(){
         playerStats.health = GetCurrentHealth();
+        playerStats.maxHealth = GetMaxHealthCount();
     }
 }

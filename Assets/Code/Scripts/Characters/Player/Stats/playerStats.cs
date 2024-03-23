@@ -14,6 +14,16 @@ public class playerStats : MonoBehaviour
             return _health;
         }
     }
+    private static float _maxHealth;
+    public static float maxHealth{
+        set{
+            _maxHealth = value;
+            OnStatsChange();
+        }
+        get{
+            return _maxHealth;
+        }
+    }
     private static float _fireRate;
     public static float fireRate{
         set{
