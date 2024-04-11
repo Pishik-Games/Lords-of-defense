@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour
     public FormationBase Formation {
         get {
             if (_formation == null) _formation = GetComponent<FormationBase>();
-            transform.position = GetRandomPosForSPawn();
+            transform.position = GetRandomPosForSpawn();
             return _formation;
         }
         set => _formation = value;
@@ -76,11 +76,12 @@ public class WaveManager : MonoBehaviour
             _spawnedUnits.Add(unit);
         }
     }
-
-    public Vector3 GetRandomPosForSPawn(){
-        var worldBorder = GameObject.Find("World Border");
-        var RandX = UnityEngine.Random.Range(worldBorder.transform.localScale.x * -1,worldBorder.transform.localScale.x);
-        var RandZ = UnityEngine.Random.Range(   worldBorder.transform.localScale.z * -1,worldBorder.transform.localScale.z);
+    public Vector3 GetRandomPosForSpawn(){
+        var extensionFactor = 5.0f;
+        var wbLocalScale = WorldBorder.WorldBorderObj.transform.localScale;
+        
+        var RandX = UnityEngine.Random.Range(wbLocalScale.x * -extensionFactor, wbLocalScale.x * extensionFactor);
+        var RandZ = UnityEngine.Random.Range(wbLocalScale.z * -extensionFactor, wbLocalScale.z * extensionFactor);
 
         return new Vector3(RandX, 0.0f, RandZ);
     }
